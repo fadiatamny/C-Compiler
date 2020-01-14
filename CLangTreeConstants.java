@@ -12,18 +12,20 @@ public interface CLangTreeConstants
   public int JJTSTATEMENTBLOCKDEF = 8;
   public int JJTSTATEMENTDEF = 9;
   public int JJTIFSTATEMENTDEF = 10;
-  public int JJTEXPRESSIONDEF = 11;
-  public int JJTASSIGNEXPRESSIONDEF = 12;
-  public int JJTBOOLEXPRESSIONDEF = 13;
-  public int JJTBINARYBOOLEXPRESSIONORDEF = 14;
-  public int JJTBINARYBOOLEXPRESSIONANDDEF = 15;
-  public int JJTBINARYEXPRESSIONEQDEF = 16;
-  public int JJTBINARYBOOLOPERATORCOMPAREDEF = 17;
-  public int JJTBINARYBOOLEXPRESSIONCOMPAREDEF = 18;
-  public int JJTADDEXPRESSIONDEF = 19;
-  public int JJTMULEXPRESSIONDEF = 20;
-  public int JJTUNARYEXPRESSIONDEF = 21;
-  public int JJTCONSTEXPRESSIONDEF = 22;
+  public int JJTWHILESTATEMENTDEF = 11;
+  public int JJTFORSTATEMENTDEF = 12;
+  public int JJTEXPRESSIONDEF = 13;
+  public int JJTASSIGNEXPRESSIONDEF = 14;
+  public int JJTBOOLEXPRESSIONDEF = 15;
+  public int JJTBINARYBOOLEXPRESSIONORDEF = 16;
+  public int JJTBINARYBOOLEXPRESSIONANDDEF = 17;
+  public int JJTBINARYEXPRESSIONEQDEF = 18;
+  public int JJTBINARYBOOLOPERATORCOMPAREDEF = 19;
+  public int JJTBINARYBOOLEXPRESSIONCOMPAREDEF = 20;
+  public int JJTADDEXPRESSIONDEF = 21;
+  public int JJTMULEXPRESSIONDEF = 22;
+  public int JJTUNARYEXPRESSIONDEF = 23;
+  public int JJTCONSTEXPRESSIONDEF = 24;
 
 
   public String[] jjtNodeName = {
@@ -38,6 +40,8 @@ public interface CLangTreeConstants
     "StatementBlockDef",
     "StatementDef",
     "IfStatementDef",
+    "WhileStatementDef",
+    "ForStatementDef",
     "expressionDef",
     "assignExpressionDef",
     "boolExpressionDef",
@@ -52,4 +56,4 @@ public interface CLangTreeConstants
     "constExpressionDef",
   };
 }
-/* JavaCC - OriginalChecksum=50d3f1243160801e9014c51f6a55a0f3 (do not edit this line) */
+/* JavaCC - OriginalChecksum=1e1168683c1b862bc875ce60503b0494 (do not edit this line) */

@@ -20,6 +20,8 @@ SKIP : {
 TOKEN : {
     <TYPE: <INT> | <CHAR> | <VOID> >    |
     <IF:   "if"  >                      |
+    <FOR:   "for"  >                    |
+    <WHILE:   "while"  >                |
     <#INT: "int" >                      |
     <#CHAR: "char" >                    |
     <#VOID: "void" >                    
@@ -354,7 +356,42 @@ void StatementDef() : {/*@bgen(jjtree) StatementDef */
 /*@egen*/
     varDefineDef() <SEMICOLON> |
     expressionDef() <SEMICOLON> |
-    IfStatementDef()/*@bgen(jjtree)*/
+    IfStatementDef()            |
+    WhileStatementDef()         |
+    ForStatementDef()/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/           
+}
+
+void IfStatementDef() : {/*@bgen(jjtree) IfStatementDef */
+  ASTIfStatementDef jjtn000 = new ASTIfStatementDef(JJTIFSTATEMENTDEF);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/}
+{/*@bgen(jjtree) IfStatementDef */
+    try {
+/*@egen*/
+    <IF> <LRBRACKET> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -378,16 +415,49 @@ void StatementDef() : {/*@bgen(jjtree) StatementDef */
 /*@egen*/
 }
 
-void IfStatementDef() : {/*@bgen(jjtree) IfStatementDef */
-  ASTIfStatementDef jjtn000 = new ASTIfStatementDef(JJTIFSTATEMENTDEF);
+void WhileStatementDef() : {/*@bgen(jjtree) WhileStatementDef */
+  ASTWhileStatementDef jjtn000 = new ASTWhileStatementDef(JJTWHILESTATEMENTDEF);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
   jjtn000.jjtSetFirstToken(getToken(1));
 /*@egen*/}
-{/*@bgen(jjtree) IfStatementDef */
+{/*@bgen(jjtree) WhileStatementDef */
     try {
 /*@egen*/
-    <IF> <LRBRACKET> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())/*@bgen(jjtree)*/
+    <WHILE> <LRBRACKET> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
+}
+
+void ForStatementDef() : {/*@bgen(jjtree) ForStatementDef */
+  ASTForStatementDef jjtn000 = new ASTForStatementDef(JJTFORSTATEMENTDEF);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/}
+{/*@bgen(jjtree) ForStatementDef */
+    try {
+/*@egen*/
+    <FOR> <LRBRACKET> expressionDef() <SEMICOLON> expressionDef() <SEMICOLON> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -639,7 +709,7 @@ void binaryBoolExpressionCompareDef() : {/*@bgen(jjtree) binaryBoolExpressionCom
 {/*@bgen(jjtree) binaryBoolExpressionCompareDef */
     try {
 /*@egen*/
-    addExpressionDef() [ binaryBoolOperatorCompareDef() binaryBoolOperatorCompareDef() ]/*@bgen(jjtree)*/
+    addExpressionDef() [ binaryBoolOperatorCompareDef() ]/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);

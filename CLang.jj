@@ -16,6 +16,8 @@ SKIP : {
 TOKEN : {
     <TYPE: <INT> | <CHAR> | <VOID> >    |
     <IF:   "if"  >                      |
+    <FOR:   "for"  >                    |
+    <WHILE:   "while"  >                |
     <#INT: "int" >                      |
     <#CHAR: "char" >                    |
     <#VOID: "void" >                    
@@ -105,12 +107,24 @@ void StatementDef() : {}
 {
     varDefineDef() <SEMICOLON> |
     expressionDef() <SEMICOLON> |
-    IfStatementDef()
+    IfStatementDef()            |
+    WhileStatementDef()         |
+    ForStatementDef()           
 }
 
 void IfStatementDef() : {}
 {
     <IF> <LRBRACKET> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())
+}
+
+void WhileStatementDef() : {}
+{
+    <WHILE> <LRBRACKET> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())
+}
+
+void ForStatementDef() : {}
+{
+    <FOR> <LRBRACKET> expressionDef() <SEMICOLON> expressionDef() <SEMICOLON> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())
 }
 
 void expressionDef() : {}

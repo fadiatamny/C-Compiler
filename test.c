@@ -1,7 +1,9 @@
-int z;
-
-int test(int x, int y)
+int test(int x)
 {
-    int z;
-    int z;
+    if( x < 5)
+    {
+        int y;
+    }
+
+    yufhjgfg = 5 ;
 }
