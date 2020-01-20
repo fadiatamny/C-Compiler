@@ -13,9 +13,9 @@ public interface CLangConstants {
   /** RegularExpression Id. */
   int IF = 8;
   /** RegularExpression Id. */
-  int FOR = 9;
+  int WHILE = 9;
   /** RegularExpression Id. */
-  int WHILE = 10;
+  int FOR = 10;
   /** RegularExpression Id. */
   int INT = 11;
   /** RegularExpression Id. */
@@ -93,8 +93,8 @@ public interface CLangConstants {
     "<token of kind 6>",
     "<TYPE>",
     "\"if\"",
-    "\"for\"",
     "\"while\"",
+    "\"for\"",
     "\"int\"",
     "\"char\"",
     "\"void\"",

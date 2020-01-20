@@ -16,8 +16,8 @@ SKIP : {
 TOKEN : {
     <TYPE: <INT> | <CHAR> | <VOID> >    |
     <IF:   "if"  >                      |
-    <FOR:   "for"  >                    |
-    <WHILE:   "while"  >                |
+    <WHILE: "while" >                   |
+    <FOR:   "for" >                     |
     <#INT: "int" >                      |
     <#CHAR: "char" >                    |
     <#VOID: "void" >                    
@@ -109,7 +109,7 @@ void StatementDef() : {}
     expressionDef() <SEMICOLON> |
     IfStatementDef()            |
     WhileStatementDef()         |
-    ForStatementDef()           
+    ForStatementDef() 
 }
 
 void IfStatementDef() : {}
@@ -124,13 +124,18 @@ void WhileStatementDef() : {}
 
 void ForStatementDef() : {}
 {
-    <FOR> <LRBRACKET> expressionDef() <SEMICOLON> expressionDef() <SEMICOLON> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())
+    <FOR> <LRBRACKET> assignExpressionDef() <SEMICOLON> expressionDef() <SEMICOLON> expressionDef() <RRBRACKET> (StatementBlockDef() | StatementDef())
 }
 
 void expressionDef() : {}
 {
     LOOKAHEAD(assignExpressionDef()) assignExpressionDef() |
-    boolExpressionDef()
+    boolExpressionDef()                                    
+}
+
+void functionCallDef() : {}
+{
+    <ID> <LRBRACKET> [expressionDef() (<COMMA> expressionDef())*] <RRBRACKET>
 }
 
 void assignExpressionDef() : {}
@@ -166,7 +171,7 @@ void binaryBoolOperatorCompareDef() : {}
 
 void binaryBoolExpressionCompareDef() : {}
 {
-    addExpressionDef() [ binaryBoolOperatorCompareDef() binaryBoolOperatorCompareDef() ]
+    addExpressionDef() [ binaryBoolOperatorCompareDef() binaryBoolExpressionCompareDef() ]
 }
 
 void addExpressionDef() : {}
@@ -181,9 +186,10 @@ void mulExpressionDef() : {}
 
 void unaryExpressionDef() : {}
 {
-    <NOT> unaryExpressionDef()                  |
-    <LRBRACKET> expressionDef() <RRBRACKET>     |
-    constExpressionDef()
+    <NOT> unaryExpressionDef()                      |
+    <LRBRACKET> expressionDef() <RRBRACKET>         |
+    LOOKAHEAD(functionCallDef()) functionCallDef()  |
+    constExpressionDef()                        
 
 }
 
