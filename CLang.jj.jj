@@ -841,10 +841,11 @@ void unaryExpressionDef() : {/*@bgen(jjtree) unaryExpressionDef */
 {/*@bgen(jjtree) unaryExpressionDef */
     try {
 /*@egen*/
+    LOOKAHEAD(2)
+    functionCallDef() |
+    constExpressionDef() |
     <NOT> unaryExpressionDef()                      |
-    <LRBRACKET> expressionDef() <RRBRACKET>         |
-    LOOKAHEAD(functionCallDef()) functionCallDef()  |
-    constExpressionDef()/*@bgen(jjtree)*/
+    <LRBRACKET> expressionDef() <RRBRACKET>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -865,7 +866,8 @@ void unaryExpressionDef() : {/*@bgen(jjtree) unaryExpressionDef */
         jjtn000.jjtSetLastToken(getToken(0));
       }
     }
-/*@egen*/                        
+/*@egen*/         
+    
 
 }
 

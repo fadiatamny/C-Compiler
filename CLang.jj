@@ -186,10 +186,12 @@ void mulExpressionDef() : {}
 
 void unaryExpressionDef() : {}
 {
+    LOOKAHEAD(2)
+    functionCallDef() |
+    constExpressionDef() |
     <NOT> unaryExpressionDef()                      |
-    <LRBRACKET> expressionDef() <RRBRACKET>         |
-    LOOKAHEAD(functionCallDef()) functionCallDef()  |
-    constExpressionDef()                        
+    <LRBRACKET> expressionDef() <RRBRACKET>         
+    
 
 }
 
