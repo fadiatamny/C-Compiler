@@ -1,9 +1,6 @@
-int test(int x)
-{
+int main() {
     
+    int x = 9; 
 }
 
-int yes(int z)
-{
-    test(z+1);   
-}
+
