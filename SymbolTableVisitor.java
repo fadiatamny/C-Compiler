@@ -37,94 +37,94 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     public Object visit(ASTStart node, Object data) {
         Object o = super.visit(node, data);
 
-        System.out.println("SECTION .TEXT\n" +
-        "GLOBAL main\n" +
-        "\n" +
-        "printChar:\n" +
-        "    push rbp\n" +
-        "    mov rbp, rsp\n" +
-        "    push rdi\n" +
-        "    mov byte [rbp - 5], 0x41\n" +
-        "    mov byte [rbp - 4], 0x53\n" +
-        "    mov byte [rbp - 3], 0x41\n" +
-        "    mov byte [rbp - 2], 0x46\n" +
-        "    mov byte [rbp - 1], 0\n" +
-        "    mov rax, 1\n" +
-        "    mov rdi, 1\n" +
-        "    lea rsi, [rbp -5]\n" +
-        "    mov rdx, 5\n" +
-        "    syscall \n" +
-        "\n" +
-        "    mov rsp, rbp\n" +
-        "    pop rbp\n" +
-        "    ret\n" +
-        "\n" +
-        "printNumber:\n" +
-        "    push rbp\n" +
-        "    mov rbp, rsp\n" +
-        "    mov rsi, rdi\n" +
-        "    lea rdi, [rbp - 1]\n" +
-        "    mov byte [rdi], 0\n" +
-        "    mov rax, rsi\n" +
-        "    while:\n" +
-        "    cmp rax, 0\n" +
-        "    je done\n" +
-        "    mov rcx, 10\n" +
-        "    mov rdx, 0\n" +
-        "    div rcx\n" +
-        "    dec rdi\n" +
-        "    add dl, 0x30\n" +
-        "    mov byte [rdi], dl\n" +
-        "    jmp while\n" +
-        "\n" +
-        "    done:\n" +
-        "        mov rax, 1\n" +
-        "        lea rsi, [rdi]\n" +
-        "        mov rdx, rsp\n" +
-        "        sub rdx, rsi\n" +
-        "        mov rdi, 1\n" +
-        "        syscall \n" +
-        "\n" +
-        "        mov rsp, rbp\n" +
-        "        pop rbp\n" +
-        "        ret\n" +
-        "\n" +
-        "readInteger:\n" +
-        "    push rbp\n" +
-        "    mov rbp, rsp\n" +
-        "\n" +
-        "    mov rdx, 10\n" +
-        "    mov qword [rbp - 10], 0\n" +
-        "    mov word [rbp - 2], 0\n" +
-        "    lea rsi, [rbp - 10]\n" +
-        "    mov rdi, 0 ; stdin\n" +
-        "    mov rax, 0 ; sys_read\n" +
-        "    syscall\n" +
-        "\n" +
-        "    xor rax, rax\n" +
-        "    xor rbx, rbx\n" +
-        "    lea rcx, [rbp - 10]\n" +
-        "    \n" +
-        "    copy_byte:\n" +
-        "        cmp rbx, 10\n" +
-        "        je read_done    \n" +
-        "        mov dl, byte [rcx]\n" +
-        "        cmp dl, 10\n" +
-        "        jle read_done\n" +
-        "        sub rdx, 0x30\n" +
-        "        imul rax, 10\n" +
-        "        add rax, rdx\n" +
-        "        nextchar:\n" +
-        "            inc rcx\n" +
-        "            inc rbx\n" +
-        "            jmp copy_byte\n" +
-        "    read_done:\n" +
-        "        mov rsp, rbp\n" +
-        "        pop rbp\n" +
-        "        ret\n" +
-        "\n");
-        for (String s : _text)
-            System.out.println(s);
+        // System.out.println("SECTION .TEXT\n" +
+        // "GLOBAL main\n" +
+        // "\n" +
+        // "printChar:\n" +
+        // "    push rbp\n" +
+        // "    mov rbp, rsp\n" +
+        // "    push rdi\n" +
+        // "    mov byte [rbp - 5], 0x41\n" +
+        // "    mov byte [rbp - 4], 0x53\n" +
+        // "    mov byte [rbp - 3], 0x41\n" +
+        // "    mov byte [rbp - 2], 0x46\n" +
+        // "    mov byte [rbp - 1], 0\n" +
+        // "    mov rax, 1\n" +
+        // "    mov rdi, 1\n" +
+        // "    lea rsi, [rbp -5]\n" +
+        // "    mov rdx, 5\n" +
+        // "    syscall \n" +
+        // "\n" +
+        // "    mov rsp, rbp\n" +
+        // "    pop rbp\n" +
+        // "    ret\n" +
+        // "\n" +
+        // "printNumber:\n" +
+        // "    push rbp\n" +
+        // "    mov rbp, rsp\n" +
+        // "    mov rsi, rdi\n" +
+        // "    lea rdi, [rbp - 1]\n" +
+        // "    mov byte [rdi], 0\n" +
+        // "    mov rax, rsi\n" +
+        // "    while:\n" +
+        // "    cmp rax, 0\n" +
+        // "    je done\n" +
+        // "    mov rcx, 10\n" +
+        // "    mov rdx, 0\n" +
+        // "    div rcx\n" +
+        // "    dec rdi\n" +
+        // "    add dl, 0x30\n" +
+        // "    mov byte [rdi], dl\n" +
+        // "    jmp while\n" +
+        // "\n" +
+        // "    done:\n" +
+        // "        mov rax, 1\n" +
+        // "        lea rsi, [rdi]\n" +
+        // "        mov rdx, rsp\n" +
+        // "        sub rdx, rsi\n" +
+        // "        mov rdi, 1\n" +
+        // "        syscall \n" +
+        // "\n" +
+        // "        mov rsp, rbp\n" +
+        // "        pop rbp\n" +
+        // "        ret\n" +
+        // "\n" +
+        // "readInteger:\n" +
+        // "    push rbp\n" +
+        // "    mov rbp, rsp\n" +
+        // "\n" +
+        // "    mov rdx, 10\n" +
+        // "    mov qword [rbp - 10], 0\n" +
+        // "    mov word [rbp - 2], 0\n" +
+        // "    lea rsi, [rbp - 10]\n" +
+        // "    mov rdi, 0 ; stdin\n" +
+        // "    mov rax, 0 ; sys_read\n" +
+        // "    syscall\n" +
+        // "\n" +
+        // "    xor rax, rax\n" +
+        // "    xor rbx, rbx\n" +
+        // "    lea rcx, [rbp - 10]\n" +
+        // "    \n" +
+        // "    copy_byte:\n" +
+        // "        cmp rbx, 10\n" +
+        // "        je read_done    \n" +
+        // "        mov dl, byte [rcx]\n" +
+        // "        cmp dl, 10\n" +
+        // "        jle read_done\n" +
+        // "        sub rdx, 0x30\n" +
+        // "        imul rax, 10\n" +
+        // "        add rax, rdx\n" +
+        // "        nextchar:\n" +
+        // "            inc rcx\n" +
+        // "            inc rbx\n" +
+        // "            jmp copy_byte\n" +
+        // "    read_done:\n" +
+        // "        mov rsp, rbp\n" +
+        // "        pop rbp\n" +
+        // "        ret\n" +
+        // "\n");
+        // for (String s : _text)
+        //     System.out.println(s);
         return o;
     }
 
@@ -316,26 +316,117 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
 
     @Override
     public Object visit(ASTStatementDef node, Object data) {
-        System.out.println("ASTStatementDef= "+node.firstToken.image);
+        System.out.println("ASTStatementDef first= "+node.firstToken.image);
+        System.out.println("ASTStatementDef secend= "+node.firstToken.next.image);
+        System.out.println("ASTStatementDef 3= "+node.firstToken.next.next.next.image);
 
         boolean isIf = node.firstToken.image.equals("if");
         boolean isFor = node.firstToken.image.equals("for");
         boolean isWhile = node.firstToken.image.equals("while");
 
-        if(node.firstToken.image.equals("if")){ //not fin
-            _text.add("mov eax, $x");
-            _text.add("cmp eax, 0");
-            _text.add("jne end");
-            _text.add(" mov eax, 1");
-            _text.add("end:");
+        if(node.firstToken.image.equals("if")){ 
+            switch(node.firstToken.next.next.next.image)
+            {
+                case ">":
+                    _text.add("jl end");
+                    break;
+
+                case "<":
+                    _text.add("jg end");
+                    break;
+                case "==":
+                    _text.add("jen end");
+                    break;
+                case "=>":
+                    _text.add("jle end");
+                    break;
+                case "=<":
+                    _text.add("jge end");
+                    break;
+                case "!=":
+                    _text.add("je end");
+                    break;
+                case "!":
+                    //
+                    break;
+            }
+            
+            // _text.add("mov eax, $x");
+            // _text.add("cmp eax, 0");
+            // _text.add("jne end");
+            // _text.add(" mov eax, 1");
+            // _text.add("end:");
         }
         else if(node.firstToken.image.equals("for")) //not fin
         {
+
 
         }
 
         else if (node.firstToken.image.equals("while"))  //not fin
         {
+            switch(node.firstToken.next.next.next.image)
+            {
+                case ">":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jl end");
+                    _text.add("beginning:");
+                    Object t = super.visit(node, data);
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jg beginning");
+                    _text.add("end:");
+                    break;
+
+                case "<":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jg end");
+                    _text.add("beginning:");
+                    Object t = super.visit(node, data);
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jl beginning");
+                    _text.add("end:");
+                    break;
+                case "==":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jne end");
+                    _text.add("beginning:");
+                    Object t = super.visit(node, data);
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("je beginning");
+                    _text.add("end:");
+                    break;
+                case "=>":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jle end");
+                    _text.add("beginning:");
+                    Object t = super.visit(node, data);
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jge beginning");
+                    _text.add("end:");
+                    break;
+                case "=<":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jge end");
+                    _text.add("beginning:");
+                    Object t = super.visit(node, data);
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jle beginning");
+                    _text.add("end:");
+                    break;
+                case "!=":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("je end");
+                    _text.add("beginning:");
+                    Object t = super.visit(node, data);
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jne beginning");
+                    _text.add("end:");
+                    break;
+                case "!":
+                    //
+                    break;
+            }
+
 
             //mov eax, $x
            // cmp eax, 0x0A
