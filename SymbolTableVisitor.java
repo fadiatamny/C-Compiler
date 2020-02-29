@@ -9,7 +9,6 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     Vector<String> _text;
     int stackIndex = 0;
     int gOffset = 0;
-    
 
     public static class SymbolTableEntry {
         public String name;
@@ -227,6 +226,17 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                 System.exit(-1);
             }
 
+            if (this.calling) {
+                FunctionTableEntry f = resolveFunc(this.funcName);
+                for (SymbolTableEntry elem : f.variables) {
+                    if (!elem.type.equals(e.type)) {
+                        System.err.println(String.format("Variable %s is not defined at %d : %d", node.firstToken.image,
+                                node.firstToken.beginLine, node.firstToken.beginColumn));
+                        System.exit(-1);
+                    }
+                }
+                this.calling = false;
+            }
             // System.out.println("ASTconstExpressionDef e = " + e);
             // System.out.println("ASTconstExpressionDef var = " + var);
 
@@ -239,7 +249,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         // System.out.println("ASTconstExpressionDef no if");
 
         return super.visit(node, data);
-        
+
     }
 
     private boolean checkReturn(ASTfunctionDef node) {
@@ -253,9 +263,12 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         return false;
     }
 
+    String funcName;
+    boolean calling = false;
+
     @Override
     public Object visit(ASTfunctionDef node, Object data) {
-        // System.out.println("ASTfunctionDef");
+
         if (resolve(node.firstToken.next.image) != null) {
             System.err.println(String.format("ERROR: VAR %s REDEFINITION AT %d : %d", node.firstToken.next.image,
                     node.firstToken.next.beginLine, node.firstToken.next.beginColumn));
@@ -263,6 +276,8 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         }
         HashMap<String, SymbolTableEntry> s = new HashMap<>();
         this.symbols.add(s);
+        this.calling = false;
+        this.funcName = node.firstToken.next.image;
         // System.out.println("node.firstToken.image = " + node.firstToken.image);
         // System.out.println("node.firstToken.next.image = " +
         // node.firstToken.next.image);
@@ -295,7 +310,14 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     node.firstToken.beginLine, node.firstToken.beginColumn));
             System.exit(-1);
         }
-        return super.visit(node, data);
+
+        this.calling = true;
+
+        Object o = super.visit(node, data);
+
+        this.calling = false;
+
+        return o;
     }
 
     @Override
@@ -309,8 +331,14 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         Object res = super.visit(node, data);
 
         SymbolTableEntry e = new SymbolTableEntry(node.firstToken.next.image, node.firstToken.image, this.stackIndex);
-        this.stackIndex += 4;
+        if (node.firstToken.image.equals("int"))
+            this.stackIndex += 4;
+        else
+            this.stackIndex += 1;
         put(e);
+
+        FunctionTableEntry f = resolveFunc(this.funcName);
+        f.variables.add(e);
 
         return res;
     }
@@ -382,11 +410,10 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         } else if (node.firstToken.image.equals("for")) // not fin
         {
             SymbolTableEntry tmp = resolve(String.format("%s", node.firstToken.next.next));
-            _text.add(String.format("mov [rbp - %d], %s",tmp.offset,node.firstToken.next.next.next.next.image));
-            //data = node.children[0].jjtAccept(this, data);
-            
+            _text.add(String.format("mov [rbp - %d], %s", tmp.offset, node.firstToken.next.next.next.next.image));
+            // data = node.children[0].jjtAccept(this, data);
 
-            _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));
+            _text.add(String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));
             switch (node.firstToken.next.next.next.next.next.next.next.image) {
                 case ">":
                     // _text.add("cmp eax ");//not complited;
@@ -394,7 +421,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("beginning:");
                     data = node.children[0].jjtAccept(this, data);
                     _text.add("inc eax");
-                    _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));// not complited;
+                    _text.add(
+                            String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));// not
+                                                                                                                        // complited;
                     _text.add("jg beginning");
                     _text.add("end:");
                     break;
@@ -405,7 +434,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("beginning:");
                     data = node.children[0].jjtAccept(this, data);
                     _text.add("inc eax");
-                    _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));// not complited;
+                    _text.add(
+                            String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));// not
+                                                                                                                        // complited;
                     _text.add("jl beginning");
                     _text.add("end:");
                     break;
@@ -415,7 +446,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("beginning:");
                     data = node.children[0].jjtAccept(this, data);
                     _text.add("inc eax");
-                    _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));// not complited;
+                    _text.add(
+                            String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));// not
+                                                                                                                        // complited;
                     _text.add("je beginning");
                     _text.add("end:");
                     break;
@@ -425,7 +458,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("beginning:");
                     data = node.children[0].jjtAccept(this, data);
                     _text.add("inc eax ");
-                    _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));// not complited;
+                    _text.add(
+                            String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));// not
+                                                                                                                        // complited;
                     _text.add("jge beginning");
                     _text.add("end:");
                     break;
@@ -435,7 +470,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("beginning:");
                     data = node.children[0].jjtAccept(this, data);
                     _text.add("inc eax");
-                    _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));// not complited;
+                    _text.add(
+                            String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));// not
+                                                                                                                        // complited;
                     _text.add("jle beginning");
                     _text.add("end:");
                     break;
@@ -445,7 +482,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("beginning:");
                     data = node.children[0].jjtAccept(this, data);
                     _text.add("inc eax");
-                    _text.add(String.format("cmp eax %s",node.firstToken.next.next.next.next.next.next.next.next.image));// not complited;
+                    _text.add(
+                            String.format("cmp eax %s", node.firstToken.next.next.next.next.next.next.next.next.image));// not
+                                                                                                                        // complited;
                     _text.add("jne beginning");
                     _text.add("end:");
                     break;
