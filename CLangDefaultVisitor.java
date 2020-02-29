@@ -7,6 +7,9 @@ public class CLangDefaultVisitor implements CLangVisitor{
   public Object visit(SimpleNode node, Object data){
     return defaultVisit(node, data);
   }
+  public Object visit(ASTReturnStatment node, Object data){
+    return defaultVisit(node, data);
+  }
   public Object visit(ASTStart node, Object data){
     return defaultVisit(node, data);
   }
@@ -86,4 +89,4 @@ public class CLangDefaultVisitor implements CLangVisitor{
     return defaultVisit(node, data);
   }
 }
-/* JavaCC - OriginalChecksum=f10c9e26f66e38f51533f501e1560928 (do not edit this line) */
+/* JavaCC - OriginalChecksum=9411f4a73a54ccfc6ce895ac89f66f38 (do not edit this line) */

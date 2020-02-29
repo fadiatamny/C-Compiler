@@ -1,27 +1,10 @@
-int main() {
-    int c=2;
-    int i=1;
-    if(c==3);
-    for (c = 0; i < 9; i=i+1)
+int main()
 {
-    /* code */
-};
-
+    int x = 3;
+    int y = 2;
+    for( x=0;x<0;x=x+1)
+    {
+        x = x - 1;
+    }
+    return 0;
 }
-
-mov c 0
-cmp i c
-jg end
-beginning:
-//
-//
-inc i
-cmp i c
-jl beginning
-end:
-//
-//
-
-
-
-

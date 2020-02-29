@@ -24,8 +24,9 @@ TOKEN : {
 }
 
 TOKEN: {
+    <RETURN: "return" >                                             |
     <ID: <LETTER> (<LETTER> | <DIGIT> | <ZERO>)* >                  |
-    <NUMBER: <DIGIT> (<DIGIT> | <ZERO>)* | <ZERO> >                          |
+    <NUMBER: <DIGIT> (<DIGIT> | <ZERO>)* | <ZERO> >                 |
     <CHAR_VALUE: <APSOTREPHE> (<LETTER> | <DIGIT>) <APSOTREPHE> >   | 
     <#LETTER: ["a"-"z","A"-"Z"] >                                   |
     <#DIGIT: ["1"-"9"] >                                            |
@@ -55,6 +56,11 @@ TOKEN: {
     <MUL:       "*" > |
     <DIV:       "/" > |
     <MOD:       "%" >  
+}
+
+void ReturnStatment() : {} 
+{
+    <RETURN> constExpressionDef()
 }
 
 void Start() : {}
@@ -105,11 +111,12 @@ void StatementBlockDef() : {}
 
 void StatementDef() : {}
 {
-    varDefineDef() <SEMICOLON> |
+    varDefineDef() <SEMICOLON>  |
     expressionDef() <SEMICOLON> |
     IfStatementDef()            |
     WhileStatementDef()         |
-    ForStatementDef() 
+    ForStatementDef()           | 
+    ReturnStatment() <SEMICOLON>
 }
 
 void IfStatementDef() : {}

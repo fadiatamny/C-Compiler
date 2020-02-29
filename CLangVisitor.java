@@ -2,6 +2,7 @@
 public interface CLangVisitor
 {
   public Object visit(SimpleNode node, Object data);
+  public Object visit(ASTReturnStatment node, Object data);
   public Object visit(ASTStart node, Object data);
   public Object visit(ASTsourceCodeDef node, Object data);
   public Object visit(ASTparamListDef node, Object data);
@@ -29,4 +30,4 @@ public interface CLangVisitor
   public Object visit(ASTunaryExpressionDef node, Object data);
   public Object visit(ASTconstExpressionDef node, Object data);
 }
-/* JavaCC - OriginalChecksum=c785a435c88407f4eb19ac9b316d9754 (do not edit this line) */
+/* JavaCC - OriginalChecksum=e1df96f49b44555a4ba3e6b554b9874e (do not edit this line) */

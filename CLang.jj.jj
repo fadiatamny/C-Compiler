@@ -28,8 +28,9 @@ TOKEN : {
 }
 
 TOKEN: {
+    <RETURN: "return" >                                             |
     <ID: <LETTER> (<LETTER> | <DIGIT> | <ZERO>)* >                  |
-    <NUMBER: <DIGIT> (<DIGIT> | <ZERO>)* | <ZERO> >                          |
+    <NUMBER: <DIGIT> (<DIGIT> | <ZERO>)* | <ZERO> >                 |
     <CHAR_VALUE: <APSOTREPHE> (<LETTER> | <DIGIT>) <APSOTREPHE> >   | 
     <#LETTER: ["a"-"z","A"-"Z"] >                                   |
     <#DIGIT: ["1"-"9"] >                                            |
@@ -59,6 +60,39 @@ TOKEN: {
     <MUL:       "*" > |
     <DIV:       "/" > |
     <MOD:       "%" >  
+}
+
+void ReturnStatment() : {/*@bgen(jjtree) ReturnStatment */
+  ASTReturnStatment jjtn000 = new ASTReturnStatment(JJTRETURNSTATMENT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+  jjtn000.jjtSetFirstToken(getToken(1));
+/*@egen*/} 
+{/*@bgen(jjtree) ReturnStatment */
+    try {
+/*@egen*/
+    <RETURN> constExpressionDef()/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+        jjtn000.jjtSetLastToken(getToken(0));
+      }
+    }
+/*@egen*/
 }
 
 void Start() : {/*@bgen(jjtree) Start */
@@ -354,11 +388,12 @@ void StatementDef() : {/*@bgen(jjtree) StatementDef */
 {/*@bgen(jjtree) StatementDef */
     try {
 /*@egen*/
-    varDefineDef() <SEMICOLON> |
+    varDefineDef() <SEMICOLON>  |
     expressionDef() <SEMICOLON> |
     IfStatementDef()            |
     WhileStatementDef()         |
-    ForStatementDef()/*@bgen(jjtree)*/
+    ForStatementDef()           | 
+    ReturnStatment() <SEMICOLON>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -379,7 +414,7 @@ void StatementDef() : {/*@bgen(jjtree) StatementDef */
         jjtn000.jjtSetLastToken(getToken(0));
       }
     }
-/*@egen*/ 
+/*@egen*/
 }
 
 void IfStatementDef() : {/*@bgen(jjtree) IfStatementDef */
