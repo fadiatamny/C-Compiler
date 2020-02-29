@@ -320,9 +320,9 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         System.out.println("ASTStatementDef secend= "+node.firstToken.next.image);
         System.out.println("ASTStatementDef 3= "+node.firstToken.next.next.next.image);
 
-        boolean isIf = node.firstToken.image.equals("if");
-        boolean isFor = node.firstToken.image.equals("for");
-        boolean isWhile = node.firstToken.image.equals("while");
+        // boolean isIf = node.firstToken.image.equals("if");
+        // boolean isFor = node.firstToken.image.equals("for");
+        // boolean isWhile = node.firstToken.image.equals("while");
 
         if(node.firstToken.image.equals("if")){ 
             switch(node.firstToken.next.next.next.image)
@@ -359,6 +359,88 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         }
         else if(node.firstToken.image.equals("for")) //not fin
         {
+            data = node.jjtAccept(this, data);
+
+            switch(node.firstToken.next.next.next.image)
+            {
+                case ">":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jl end");
+                    _text.add("beginning:");
+                    data = node.jjtAccept(this, data);
+                    _text.add("inc x");//not complited;
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jg beginning");
+                    _text.add("end:");
+                    break;
+
+                case "<":
+                    _text.add("cmp eax x ");//not complited;
+                    _text.add("jg end");
+                    _text.add("beginning:");
+                    data = node.jjtAccept(this, data);
+                    _text.add("inc x ");//not complited;
+                    _text.add("cmp eax x" );//not complited;
+                    _text.add("jl beginning");
+                    _text.add("end:");
+                    break;
+                case "==":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jne end");
+                    _text.add("beginning:");
+                    data = node.jjtAccept(this, data);
+                    _text.add("inc x");//not complited;
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("je beginning");
+                    _text.add("end:");
+                    break;
+                case "=>":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jle end");
+                    _text.add("beginning:");
+                    data = node.jjtAccept(this, data);
+                    _text.add("inc x");//not complited;
+                    _text.add("cmp eax" );//not complited;
+                    _text.add("jge beginning");
+                    _text.add("end:");
+                    break;
+                case "=<":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jge end");
+                    _text.add("beginning:");
+                    data = node.jjtAccept(this, data);
+                    _text.add("inc x");//not complited;
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jle beginning");
+                    _text.add("end:");
+                    break;
+                case "!=":
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("je end");
+                    _text.add("beginning:");
+                    data = node.jjtAccept(this, data);
+                    _text.add("inc x");//not complited;
+                    _text.add("cmp eax ");//not complited;
+                    _text.add("jne beginning");
+                    _text.add("end:");
+                    break;
+                case "!":
+                    //
+                    break;
+            }
+            // mov c 0
+            // cmp i c
+            // jg end
+            // beginning:
+            // //
+            // //
+            // inc i
+            // cmp i c
+            // jl beginning
+            // end:
+            // //
+            // //
+            
 
 
         }
@@ -371,7 +453,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("cmp eax ");//not complited;
                     _text.add("jl end");
                     _text.add("beginning:");
-                    Object t = super.visit(node, data);
+                    data = node.jjtAccept(this, data);
                     _text.add("cmp eax" );//not complited;
                     _text.add("jg beginning");
                     _text.add("end:");
@@ -381,7 +463,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("cmp eax ");//not complited;
                     _text.add("jg end");
                     _text.add("beginning:");
-                    Object t = super.visit(node, data);
+                    data = node.jjtAccept(this, data);
                     _text.add("cmp eax" );//not complited;
                     _text.add("jl beginning");
                     _text.add("end:");
@@ -390,7 +472,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("cmp eax ");//not complited;
                     _text.add("jne end");
                     _text.add("beginning:");
-                    Object t = super.visit(node, data);
+                    data = node.jjtAccept(this, data);
                     _text.add("cmp eax" );//not complited;
                     _text.add("je beginning");
                     _text.add("end:");
@@ -399,7 +481,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("cmp eax ");//not complited;
                     _text.add("jle end");
                     _text.add("beginning:");
-                    Object t = super.visit(node, data);
+                    data = node.jjtAccept(this, data);
                     _text.add("cmp eax" );//not complited;
                     _text.add("jge beginning");
                     _text.add("end:");
@@ -408,8 +490,8 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("cmp eax ");//not complited;
                     _text.add("jge end");
                     _text.add("beginning:");
-                    Object t = super.visit(node, data);
-                    _text.add("cmp eax" );//not complited;
+                    data = node.jjtAccept(this, data);
+                    _text.add("cmp eax ");//not complited;
                     _text.add("jle beginning");
                     _text.add("end:");
                     break;
@@ -417,8 +499,8 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
                     _text.add("cmp eax ");//not complited;
                     _text.add("je end");
                     _text.add("beginning:");
-                    Object t = super.visit(node, data);
-                    _text.add("cmp eax" );//not complited;
+                    data = node.jjtAccept(this, data);
+                    _text.add("cmp eax ");//not complited;
                     _text.add("jne beginning");
                     _text.add("end:");
                     break;
