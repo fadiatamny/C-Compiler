@@ -70,9 +70,6 @@ public class CLangDefaultVisitor implements CLangVisitor{
   public Object visit(ASTbinaryExpressionEqDef node, Object data){
     return defaultVisit(node, data);
   }
-  public Object visit(ASTbinaryBoolOperatorCompareDef node, Object data){
-    return defaultVisit(node, data);
-  }
   public Object visit(ASTbinaryBoolExpressionCompareDef node, Object data){
     return defaultVisit(node, data);
   }
@@ -89,4 +86,4 @@ public class CLangDefaultVisitor implements CLangVisitor{
     return defaultVisit(node, data);
   }
 }
-/* JavaCC - OriginalChecksum=9411f4a73a54ccfc6ce895ac89f66f38 (do not edit this line) */
+/* JavaCC - OriginalChecksum=d769b258b9afd9897f3ce4841741b7dc (do not edit this line) */

@@ -42,11 +42,12 @@ TOKEN: {
     <SEMICOLON: ";" > |
     <ASSIGN:    "=" > |
     <APSOTREPHE:"'" > |
+    <COMPAREOPS: <LT> | <LTE> | <GT> | <GTE> > |
     <EQ:       "==" > |
-    <LT:       "<"  > |
-    <LTE:      "<=" > |
-    <GT:       ">"  > |
-    <GTE:      ">=" > |
+    <#LT:       "<"  > |
+    <#LTE:      "<=" > |
+    <#GT:       ">"  > |
+    <#GTE:      ">=" > |
     <NOT:      "!"  > |
     <NEQ:      "!=" > |
     <AND:      "&&" > |
@@ -170,15 +171,10 @@ void binaryExpressionEqDef() : {}
     binaryBoolExpressionCompareDef() [ (<EQ> | <NEQ> ) binaryExpressionEqDef() ] 
 }
 
-void binaryBoolOperatorCompareDef() : {}
-{
-    
-    <LT> | <LTE> | <GT> | <GTE>
-}
 
 void binaryBoolExpressionCompareDef() : {}
 {
-    addExpressionDef() [ binaryBoolOperatorCompareDef() binaryBoolExpressionCompareDef() ]
+    addExpressionDef() [ <COMPAREOPS> binaryBoolExpressionCompareDef() ]
 }
 
 void addExpressionDef() : {}

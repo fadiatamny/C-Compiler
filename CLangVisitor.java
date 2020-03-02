@@ -23,11 +23,10 @@ public interface CLangVisitor
   public Object visit(ASTbinaryBoolExpressionOrDef node, Object data);
   public Object visit(ASTbinaryBoolExpressionAndDef node, Object data);
   public Object visit(ASTbinaryExpressionEqDef node, Object data);
-  public Object visit(ASTbinaryBoolOperatorCompareDef node, Object data);
   public Object visit(ASTbinaryBoolExpressionCompareDef node, Object data);
   public Object visit(ASTaddExpressionDef node, Object data);
   public Object visit(ASTmulExpressionDef node, Object data);
   public Object visit(ASTunaryExpressionDef node, Object data);
   public Object visit(ASTconstExpressionDef node, Object data);
 }
-/* JavaCC - OriginalChecksum=e1df96f49b44555a4ba3e6b554b9874e (do not edit this line) */
+/* JavaCC - OriginalChecksum=57d88406bc4c7e25b71d849f40d9876a (do not edit this line) */

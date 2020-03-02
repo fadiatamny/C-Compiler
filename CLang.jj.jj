@@ -46,11 +46,12 @@ TOKEN: {
     <SEMICOLON: ";" > |
     <ASSIGN:    "=" > |
     <APSOTREPHE:"'" > |
+    <COMPAREOPS: <LT> | <LTE> | <GT> | <GTE> > |
     <EQ:       "==" > |
-    <LT:       "<"  > |
-    <LTE:      "<=" > |
-    <GT:       ">"  > |
-    <GTE:      ">=" > |
+    <#LT:       "<"  > |
+    <#LTE:      "<=" > |
+    <#GT:       ">"  > |
+    <#GTE:      ">=" > |
     <NOT:      "!"  > |
     <NEQ:      "!=" > |
     <AND:      "&&" > |
@@ -748,25 +749,6 @@ void binaryExpressionEqDef() : {/*@bgen(jjtree) binaryExpressionEqDef */
 /*@egen*/ 
 }
 
-void binaryBoolOperatorCompareDef() : {/*@bgen(jjtree) binaryBoolOperatorCompareDef */
-  ASTbinaryBoolOperatorCompareDef jjtn000 = new ASTbinaryBoolOperatorCompareDef(JJTBINARYBOOLOPERATORCOMPAREDEF);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-  jjtn000.jjtSetFirstToken(getToken(1));
-/*@egen*/}
-{/*@bgen(jjtree) binaryBoolOperatorCompareDef */
-    try {
-/*@egen*/
-    
-    <LT> | <LTE> | <GT> | <GTE>/*@bgen(jjtree)*/
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtn000.jjtSetLastToken(getToken(0));
-      }
-    }
-/*@egen*/
-}
 
 void binaryBoolExpressionCompareDef() : {/*@bgen(jjtree) binaryBoolExpressionCompareDef */
   ASTbinaryBoolExpressionCompareDef jjtn000 = new ASTbinaryBoolExpressionCompareDef(JJTBINARYBOOLEXPRESSIONCOMPAREDEF);
@@ -777,7 +759,7 @@ void binaryBoolExpressionCompareDef() : {/*@bgen(jjtree) binaryBoolExpressionCom
 {/*@bgen(jjtree) binaryBoolExpressionCompareDef */
     try {
 /*@egen*/
-    addExpressionDef() [ binaryBoolOperatorCompareDef() binaryBoolExpressionCompareDef() ]/*@bgen(jjtree)*/
+    addExpressionDef() [ <COMPAREOPS> binaryBoolExpressionCompareDef() ]/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);

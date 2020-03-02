@@ -22,12 +22,11 @@ public interface CLangTreeConstants
   public int JJTBINARYBOOLEXPRESSIONORDEF = 18;
   public int JJTBINARYBOOLEXPRESSIONANDDEF = 19;
   public int JJTBINARYEXPRESSIONEQDEF = 20;
-  public int JJTBINARYBOOLOPERATORCOMPAREDEF = 21;
-  public int JJTBINARYBOOLEXPRESSIONCOMPAREDEF = 22;
-  public int JJTADDEXPRESSIONDEF = 23;
-  public int JJTMULEXPRESSIONDEF = 24;
-  public int JJTUNARYEXPRESSIONDEF = 25;
-  public int JJTCONSTEXPRESSIONDEF = 26;
+  public int JJTBINARYBOOLEXPRESSIONCOMPAREDEF = 21;
+  public int JJTADDEXPRESSIONDEF = 22;
+  public int JJTMULEXPRESSIONDEF = 23;
+  public int JJTUNARYEXPRESSIONDEF = 24;
+  public int JJTCONSTEXPRESSIONDEF = 25;
 
 
   public String[] jjtNodeName = {
@@ -52,7 +51,6 @@ public interface CLangTreeConstants
     "binaryBoolExpressionOrDef",
     "binaryBoolExpressionAndDef",
     "binaryExpressionEqDef",
-    "binaryBoolOperatorCompareDef",
     "binaryBoolExpressionCompareDef",
     "addExpressionDef",
     "mulExpressionDef",
@@ -60,4 +58,4 @@ public interface CLangTreeConstants
     "constExpressionDef",
   };
 }
-/* JavaCC - OriginalChecksum=099c6c13d3a95e66305506ffc9c2e38c (do not edit this line) */
+/* JavaCC - OriginalChecksum=ee205c01399865972ca8167dde015663 (do not edit this line) */

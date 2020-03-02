@@ -53,33 +53,35 @@ public interface CLangConstants {
   /** RegularExpression Id. */
   int APSOTREPHE = 28;
   /** RegularExpression Id. */
-  int EQ = 29;
+  int COMPAREOPS = 29;
   /** RegularExpression Id. */
-  int LT = 30;
+  int EQ = 30;
   /** RegularExpression Id. */
-  int LTE = 31;
+  int LT = 31;
   /** RegularExpression Id. */
-  int GT = 32;
+  int LTE = 32;
   /** RegularExpression Id. */
-  int GTE = 33;
+  int GT = 33;
   /** RegularExpression Id. */
-  int NOT = 34;
+  int GTE = 34;
   /** RegularExpression Id. */
-  int NEQ = 35;
+  int NOT = 35;
   /** RegularExpression Id. */
-  int AND = 36;
+  int NEQ = 36;
   /** RegularExpression Id. */
-  int OR = 37;
+  int AND = 37;
   /** RegularExpression Id. */
-  int ADD = 38;
+  int OR = 38;
   /** RegularExpression Id. */
-  int SUB = 39;
+  int ADD = 39;
   /** RegularExpression Id. */
-  int MUL = 40;
+  int SUB = 40;
   /** RegularExpression Id. */
-  int DIV = 41;
+  int MUL = 41;
   /** RegularExpression Id. */
-  int MOD = 42;
+  int DIV = 42;
+  /** RegularExpression Id. */
+  int MOD = 43;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -115,6 +117,7 @@ public interface CLangConstants {
     "\";\"",
     "\"=\"",
     "\"\\\'\"",
+    "<COMPAREOPS>",
     "\"==\"",
     "\"<\"",
     "\"<=\"",
