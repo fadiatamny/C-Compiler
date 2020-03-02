@@ -12,6 +12,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     int globalCount = 0;
     int forCount = 0;
     boolean forStatus = false;
+
     public static class SymbolTableEntry {
         public String name;
         public String type;
@@ -24,6 +25,7 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         }
 
     }
+
     public static class FunctionTableEntry {
         public Vector<SymbolTableEntry> variables;
         public String name;
@@ -53,35 +55,25 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     public Object visit(ASTStart node, Object data) {
         Object o = super.visit(node, data);
 
-        System.out.println("SECTION .TEXT\n" 
-                            + "GLOBAL _start\n"
-                            + "_start:\n"  
-                            + " call main\n"
-                            + " mov eax, 1\n"
-                            + " xor ebx, ebx\n"
-                            + " int 0x80\n"
-                            + "\n" 
-                            + "printChar:\n" + " push rbp\n"
-                            + " mov rbp, rsp\n" + " push rdi\n" + " mov byte [rbp - 5], 0x41\n" + " mov byte [rbp - 4], 0x53\n"
-                            + " mov byte [rbp - 3], 0x41\n" + " mov byte [rbp - 2], 0x46\n" + " mov byte[rbp - 1], 0\n"
-                            + " mov rax, 1\n" + " mov rdi, 1\n" + " lea rsi, [rbp -5]\n" + " mov rdx, 5\n" + " syscall \n" + "\n"
-                            + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n" + "printNumber:\n" + "push rbp\n"
-                            + " mov rbp, rsp\n" + " mov rsi, rdi\n" + " lea rdi, [rbp - 1]\n" + " mov byte [rdi], 0\n"
-                            + " mov rax, rsi\n" + " while:\n" + " cmp rax, 0\n" + " je done\n" + " mov rcx, 10\n" + " mov rdx, 0\n"
-                            + " div rcx\n" + " dec rdi\n" + " add dl, 0x30\n" + " mov byte [rdi], dl\n" +" jmp while\n" + "\n"
-                            + " done:\n" + " mov rax, 1\n" + " lea rsi, [rdi]\n" + " mov rdx, rsp\n" + "sub rdx, rsi\n"
-                            + " mov rdi, 1\n" + " syscall \n" + "\n" + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n"
-                            + "readInteger:\n" + " push rbp\n" + " mov rbp, rsp\n" + "\n" + " mov rdx, 10\n"
-                            + " mov qword [rbp - 10], 0\n" + " mov word [rbp - 2], 0\n" + " lea rsi, [rbp- 10]\n"
-                            + " mov rdi, 0 ; stdin\n" + " mov rax, 0 ; sys_read\n" + " syscall\n" + "\n"
-                            + " xor rax, rax\n"
-                            + " xor rbx, rbx\n" + " lea rcx, [rbp - 10]\n" + " \n" + " copy_byte:\n" + "cmp rbx, 10\n"
-                            + " je read_done \n" + " mov dl, byte [rcx]\n" + " cmp dl, 10\n" + " jle read_done\n"
-                            + " sub rdx, 0x30\n" + " imul rax, 10\n" + " add rax, rdx\n" + " nextchar:\n"
-                            + " inc rcx\n"
-                            + " inc rbx\n" + " jmp copy_byte\n" + " read_done:\n" + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n"
-                            + "\n"
-        );
+        System.out.println("SECTION .TEXT\n" + "GLOBAL _start\n" + "_start:\n" + " call main\n" + " mov eax, 1\n"
+                + " xor ebx, ebx\n" + " int 0x80\n" + "\n" + "printChar:\n" + " push rbp\n" + " mov rbp, rsp\n"
+                + " push rdi\n" + " mov byte [rbp - 5], 0x41\n" + " mov byte [rbp - 4], 0x53\n"
+                + " mov byte [rbp - 3], 0x41\n" + " mov byte [rbp - 2], 0x46\n" + " mov byte[rbp - 1], 0\n"
+                + " mov rax, 1\n" + " mov rdi, 1\n" + " lea rsi, [rbp -5]\n" + " mov rdx, 5\n" + " syscall \n" + "\n"
+                + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n" + "printNumber:\n" + "push rbp\n"
+                + " mov rbp, rsp\n" + " mov rsi, rdi\n" + " lea rdi, [rbp - 1]\n" + " mov byte [rdi], 0\n"
+                + " mov rax, rsi\n" + " while:\n" + " cmp rax, 0\n" + " je done\n" + " mov rcx, 10\n" + " mov rdx, 0\n"
+                + " div rcx\n" + " dec rdi\n" + " add dl, 0x30\n" + " mov byte [rdi], dl\n" + " jmp while\n" + "\n"
+                + " done:\n" + " mov rax, 1\n" + " lea rsi, [rdi]\n" + " mov rdx, rsp\n" + "sub rdx, rsi\n"
+                + " mov rdi, 1\n" + " syscall \n" + "\n" + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n"
+                + "readInteger:\n" + " push rbp\n" + " mov rbp, rsp\n" + "\n" + " mov rdx, 10\n"
+                + " mov qword [rbp - 10], 0\n" + " mov word [rbp - 2], 0\n" + " lea rsi, [rbp- 10]\n"
+                + " mov rdi, 0 ; stdin\n" + " mov rax, 0 ; sys_read\n" + " syscall\n" + "\n" + " xor rax, rax\n"
+                + " xor rbx, rbx\n" + " lea rcx, [rbp - 10]\n" + " \n" + " copy_byte:\n" + "cmp rbx, 10\n"
+                + " je read_done \n" + " mov dl, byte [rcx]\n" + " cmp dl, 10\n" + " jle read_done\n"
+                + " sub rdx, 0x30\n" + " imul rax, 10\n" + " add rax, rdx\n" + " nextchar:\n" + " inc rcx\n"
+                + " inc rbx\n" + " jmp copy_byte\n" + " read_done:\n" + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n"
+                + "\n");
         for (String s : _text)
             System.out.println(s);
         return o;
@@ -138,6 +130,33 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
         return data;
     }
 
+    public Object visit(ASTmulExpressionDef node, Object data) {
+        data = node.children[0].jjtAccept(this, data);
+        if (node.children.length > 1) {
+            String e = node.firstToken.next.image;
+            if (e.equals("*")) {
+                data = node.children[1].jjtAccept(this, data);
+                _text.add("pop rbx");
+                _text.add("pop rax");
+                _text.add("mul rax; rbx");
+                _text.add("push rax");
+            } else if (e.equals("/")) {
+                data = node.children[1].jjtAccept(this, data);
+                _text.add("pop rbx");
+                _text.add("pop rax");
+                _text.add("div rax; rbx");
+                _text.add("push rax");
+            } else if (e.equals("%")) {
+                data = node.children[1].jjtAccept(this, data);
+                _text.add("pop rbx");
+                _text.add("pop rax");
+                _text.add("shl rax, rbx");
+                _text.add("push rax");
+            }
+        }
+        return data;
+    }
+
     @Override
     public Object visit(ASTaddExpressionDef node, Object data) {
         data = node.children[0].jjtAccept(this, data);
@@ -162,11 +181,6 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     }
 
     @Override
-    public Object visit(ASTexpressionDef node, Object data) {
-        return super.visit(node, data);
-    }
-
-    @Override
     public Object visit(ASTassignExpressionDef node, Object data) {
         if (resolve(node.firstToken.image) == null) {
             System.err.println(String.format("ASSING ERROR: VAR %s ISNT DEFINED AT %d : %d", node.firstToken.image,
@@ -186,7 +200,6 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
 
         if (node.firstToken.kind == CLang.ID) {
             SymbolTableEntry e = resolve(node.firstToken.image);
-            SymbolTableEntry var = resolve(node.firstToken.next.next.image);
             if (e == null) {
                 System.err.println(String.format("Variable %s is not defined at %d : %d", node.firstToken.image,
                         node.firstToken.beginLine, node.firstToken.beginColumn));
