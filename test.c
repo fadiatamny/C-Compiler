@@ -6,19 +6,11 @@ int f(int x)
 
 int main()
 {
-    int x = 7;
-    char v = 'a';
-    f(x);
-
-    if(x > 5 && x <= 8){
-        int y = 6;
-        y = 9;
-    }
-
+    int x = 5;
     for(x = 5; x < 8; x = x + 1)
     {
-
+        int z = 16;
     }
-    
+
     return 0;
 }

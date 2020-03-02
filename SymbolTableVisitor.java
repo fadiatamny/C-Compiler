@@ -55,41 +55,27 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     public Object visit(ASTStart node, Object data) {
         Object o = super.visit(node, data);
 
-        // System.out.println("SECTION .TEXT\n" + "GLOBAL main\n" + "\n" +
-        // "printChar:\n" + " push rbp\n"
-        // + " mov rbp, rsp\n" + " push rdi\n" + " mov byte [rbp - 5], 0x41\n" + " mov
-        // byte [rbp - 4], 0x53\n"
-        // + " mov byte [rbp - 3], 0x41\n" + " mov byte [rbp - 2], 0x46\n" + " mov byte
-        // [rbp - 1], 0\n"
-        // + " mov rax, 1\n" + " mov rdi, 1\n" + " lea rsi, [rbp -5]\n" + " mov rdx,
-        // 5\n" + " syscall \n" + "\n"
-        // + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n" + "printNumber:\n" + "
-        // push rbp\n"
-        // + " mov rbp, rsp\n" + " mov rsi, rdi\n" + " lea rdi, [rbp - 1]\n" + " mov
-        // byte [rdi], 0\n"
-        // + " mov rax, rsi\n" + " while:\n" + " cmp rax, 0\n" + " je done\n" + " mov
-        // rcx, 10\n" + " mov rdx, 0\n"
-        // + " div rcx\n" + " dec rdi\n" + " add dl, 0x30\n" + " mov byte [rdi], dl\n" +
-        // " jmp while\n" + "\n"
-        // + " done:\n" + " mov rax, 1\n" + " lea rsi, [rdi]\n" + " mov rdx, rsp\n" + "
-        // sub rdx, rsi\n"
-        // + " mov rdi, 1\n" + " syscall \n" + "\n" + " mov rsp, rbp\n" + " pop rbp\n" +
-        // " ret\n" + "\n"
-        // + "readInteger:\n" + " push rbp\n" + " mov rbp, rsp\n" + "\n" + " mov rdx,
-        // 10\n"
-        // + " mov qword [rbp - 10], 0\n" + " mov word [rbp - 2], 0\n" + " lea rsi, [rbp
-        // - 10]\n"
-        // + " mov rdi, 0 ; stdin\n" + " mov rax, 0 ; sys_read\n" + " syscall\n" + "\n"
-        // + " xor rax, rax\n"
-        // + " xor rbx, rbx\n" + " lea rcx, [rbp - 10]\n" + " \n" + " copy_byte:\n" + "
-        // cmp rbx, 10\n"
-        // + " je read_done \n" + " mov dl, byte [rcx]\n" + " cmp dl, 10\n" + " jle
-        // read_done\n"
-        // + " sub rdx, 0x30\n" + " imul rax, 10\n" + " add rax, rdx\n" + " nextchar:\n"
-        // + " inc rcx\n"
-        // + " inc rbx\n" + " jmp copy_byte\n" + " read_done:\n" + " mov rsp, rbp\n" + "
-        // pop rbp\n" + " ret\n"
-        // + "\n");
+        System.out.println("SECTION .TEXT\n" + "GLOBAL main\n" + "\n" +
+        "printChar:\n" + " push rbp\n"
+        + " mov rbp, rsp\n" + " push rdi\n" + " mov byte [rbp - 5], 0x41\n" + " mov byte [rbp - 4], 0x53\n"
+        + " mov byte [rbp - 3], 0x41\n" + " mov byte [rbp - 2], 0x46\n" + " mov byte[rbp - 1], 0\n"
+        + " mov rax, 1\n" + " mov rdi, 1\n" + " lea rsi, [rbp -5]\n" + " mov rdx, 5\n" + " syscall \n" + "\n"
+        + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n" + "printNumber:\n" + "push rbp\n"
+        + " mov rbp, rsp\n" + " mov rsi, rdi\n" + " lea rdi, [rbp - 1]\n" + " mov byte [rdi], 0\n"
+        + " mov rax, rsi\n" + " while:\n" + " cmp rax, 0\n" + " je done\n" + " mov rcx, 10\n" + " mov rdx, 0\n"
+        + " div rcx\n" + " dec rdi\n" + " add dl, 0x30\n" + " mov byte [rdi], dl\n" +" jmp while\n" + "\n"
+        + " done:\n" + " mov rax, 1\n" + " lea rsi, [rdi]\n" + " mov rdx, rsp\n" + "sub rdx, rsi\n"
+        + " mov rdi, 1\n" + " syscall \n" + "\n" + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n" + "\n"
+        + "readInteger:\n" + " push rbp\n" + " mov rbp, rsp\n" + "\n" + " mov rdx, 10\n"
+        + " mov qword [rbp - 10], 0\n" + " mov word [rbp - 2], 0\n" + " lea rsi, [rbp- 10]\n"
+        + " mov rdi, 0 ; stdin\n" + " mov rax, 0 ; sys_read\n" + " syscall\n" + "\n"
+        + " xor rax, rax\n"
+        + " xor rbx, rbx\n" + " lea rcx, [rbp - 10]\n" + " \n" + " copy_byte:\n" + "cmp rbx, 10\n"
+        + " je read_done \n" + " mov dl, byte [rcx]\n" + " cmp dl, 10\n" + " jle read_done\n"
+        + " sub rdx, 0x30\n" + " imul rax, 10\n" + " add rax, rdx\n" + " nextchar:\n"
+        + " inc rcx\n"
+        + " inc rbx\n" + " jmp copy_byte\n" + " read_done:\n" + " mov rsp, rbp\n" + " pop rbp\n" + " ret\n"
+        + "\n");
         for (String s : _text)
             System.out.println(s);
         return o;
@@ -363,8 +349,11 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
 
     @Override
     public Object visit(ASTbinaryBoolExpressionOrDef node, Object data) {
-        if (node.firstToken.next.kind != CLang.ID && node.firstToken.next.kind != CLang.NUMBER && node.firstToken.next.kind != CLang.CHAR_VALUE && this.forStatus){ 
-            _text.add("whileStart"+this.globalCount+ ":");
+        System.out.println(node.firstToken.next.image);
+        if ((node.firstToken.next.kind == CLang.AND || node.firstToken.next.kind == CLang.OR
+                || node.firstToken.next.kind == CLang.COMPAREOPS || node.firstToken.next.kind == CLang.EQ
+                || node.firstToken.next.kind == CLang.NEQ) && this.forStatus) {
+            _text.add("whileStart" + this.globalCount + ":");
             this.forStatus = false;
         }
 
@@ -483,7 +472,8 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
             _text.add("pop rax");
             _text.add("cmp rax 1");
             _text.add("jne compdone" + this.globalCount);
-            Object o = node.children[1].jjtAccept(this, data);;
+            Object o = node.children[1].jjtAccept(this, data);
+            ;
             _text.add("compdone" + this.globalCount + ":");
             this.globalCount++;
             return o;
@@ -493,18 +483,17 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
 
     @Override
     public Object visit(ASTWhileStatementDef node, Object data) {
-        if (node.firstToken.kind == CLang.WHILE) 
-            _text.add("whileStart"+this.globalCount+ ":");
+        if (node.firstToken.kind == CLang.WHILE)
+            _text.add("whileStart" + this.globalCount + ":");
 
         Object d = node.children[0].jjtAccept(this, data);
         if (node.firstToken.kind == CLang.WHILE) {
             _text.add("pop rax");
             _text.add("cmp rax 1");
             _text.add("jne compdone" + this.globalCount);
+            _text.add("push rax");
             Object o = node.children[1].jjtAccept(this, data);
-            _text.add("pop rax");
-            _text.add("cmp rax 1");
-            _text.add("je whileStart" + this.globalCount);
+            _text.add("jmp whileStart" + this.globalCount);
             _text.add("compdone" + this.globalCount + ":");
             this.globalCount++;
             return o;
@@ -516,21 +505,22 @@ public class SymbolTableVisitor extends CLangDefaultVisitor {
     public Object visit(ASTForStatementDef node, Object data) {
         this.forStatus = true;
         Object d = node.children[0].jjtAccept(this, data);
-        if (node.firstToken.kind == CLang.WHILE) {
+        _text.add("FOOOOR");
+        if (node.firstToken.kind == CLang.FOR) {
+            Object o = node.children[1].jjtAccept(this, data);
             _text.add("pop rax");
             _text.add("cmp rax 1");
             _text.add("jne compdone" + this.globalCount);
-            Object o = node.children[1].jjtAccept(this, data);
-            
-            // _text.add("pop rax");
-            // _text.add("cmp rax 1");
-            // _text.add("je whileStart" + this.forCount);
+            _text.add("push rax");
+            o = node.children[3].jjtAccept(this, data);
+            o = node.children[2].jjtAccept(this, data);
+            _text.add("jmp whileStart" + this.forCount);
             _text.add("compdone" + this.globalCount + ":");
             this.globalCount++;
             this.forCount++;
             this.forStatus = false;
             return o;
-        } else{
+        } else {
             this.forStatus = false;
             return d;
         }
